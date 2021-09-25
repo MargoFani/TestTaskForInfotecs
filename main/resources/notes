@@ -1,0 +1,48 @@
+API
+
+GET /note
+	get all notes
+	returns list of notes
+
+
+GET /note/{key}
+	get note by key
+	returns note
+
+
+POST /note/set
+	RequestParam(value = "key") String key,
+	RequestParam(value = "note") String note,
+	RequestParam(value = "ttl", required = false, defaultValue = "PT3M") Duration ttl)
+
+	set note (if key already exist rewrite note and ttl)
+	returns note
+
+	ttl format "PT" +
+	"H" - hours
+	"M" - minutes
+	"S" - seconds
+
+	for ex  "PT3M" - ttl = 3 minutes
+			"PT2H3M" - ttl = 2 hours and 3 minutes
+	ex of request 
+	
+	http://localhost:8080/note/set?key=TKey&note=set test 2&ttl=PT3H
+	
+	or without ttl
+	http://localhost:8080/note/set?key=TKey&note=set test 2
+
+
+DELETE /note/{key}
+	delete note by key
+	returns removed note
+
+
+POST /note/dump/{file_name}
+	save state of the repository to txt file
+	format of file_name 'name.txt'
+	for ex test2Dump.txt
+
+
+POST /note/load/{file_name}
+	load state of the repository to txt file
